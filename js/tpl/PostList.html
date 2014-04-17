@@ -1,0 +1,15 @@
+<ul class="topcoat-list list">
+<% _.each(posts, function(post) { %>
+    <li class="topcoat-list__item">
+        <a href="#post/<%= post.id %>">
+            <p><%= post.title %></p>
+            <p><%= post.content %></p>
+            <p>
+			</p>
+            <span class="chevron"></span><span class="count"><%= post.comments %></span>
+        </a>
+        <span class="edit"></span>
+            <span class="delete"></span>
+    </li>
+<% }); %>
+</ul>

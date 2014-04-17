@@ -1,0 +1,18 @@
+<p>
+<h2>Add Comment</h2>
+<input type="text" class="topcoat-text-input" placeholder="You Name" value="">
+<input type="text" class="topcoat-text-input" placeholder="Enter Email" value="">
+<br>
+<br>
+<textarea class="topcoat-textarea" rows="6" cols="36" placeholder="Write you comment text hear"></textarea>
+<br>
+<button class="topcoat-button--large--cta" >Button</button>
+<ul class="topcoat-list list">
+<% _.each(comments, function(comment) { %>
+    <li class="topcoat-list__item">
+            <p><%= comment.content %></p>
+            <p>Author: <%= comment.author %> Email: <%= comment.email %></p>
+			
+    </li>
+<% }); %>
+</ul>
