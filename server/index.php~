@@ -9,9 +9,8 @@ $app->get('/posts/', 'getPosts');
 $app->get('/posts/:id', 'getSinglepost');
 $app->get('/posts/:id/comments', 'getComments');
 // $app->get('/posts/:id/addcoment', 'addComent');
-// $app->get('/posts/:id/addpost', 'addPost');
 // $app->get('/posts/:id/delete', 'deletePost');
-// $app->get('/posts/:id/edite', 'updatePost');
+// $app->get('/posts/:id/edite', 'editPost');
 
 $app->run();
 
@@ -43,14 +42,14 @@ function addPost() {
 
     $app_r = Slim::getInstance()->request();
     $title = $app_r->post('title');
-    $content = $app_r->post('content');
+    $text = $app_r->post('text');
 
-    $sql_st = "INSERT INTO tbl_post(title, content) VALUES(?,?)";
+    $sql_st = "INSERT INTO posts(title, text) VALUES(?,?)";
     
     try {
         $db = getConnection();
 	$sql = $db->prepare($sql_st);
-        if ($sql->execute(array($title, $content))) {
+        if ($sql->execute(array($title, $text))) {
           $return_a = array('id' => $db_conn->lastInsertId());
         } else {
           $return_a = array('add' => 'failed');
@@ -69,24 +68,24 @@ function updatePost() {
     $id = $reqt->post('id');
     //$post = $reqt->post('post');
     $title = $app_r->post('title');
-    $content = $app_r->post('content');
+    $text = $app_r->post('text');
 
-    $sql_st = 'Update tbl_post set text=:text, title=:title WHERE id=:id';
+    $sql_st = 'Update posts set text=:text, title=:title WHERE id=:id';
     $update_array = array('id' => $id, 'title' => $title, 'text' => $text);
 
     $sql = $db_conn->prepare($sql_st);
     if ($sql->execute($update_array)) {
-        sendAnsver($update_array);
+        echo json_encode($update_array);
     }
 }
 
-function deletePost($id) {
-    $db_conn = getConnection();
-    $sql_st = 'DELETE FROM posts WHERE id=?';
+function deleteScore($id) {
+    $db_conn = conn();
+    $sql_st = 'DELETE FROM score WHERE id=?';
     $sql = $db_conn->prepare($sql_st);
     if ($sql->execute(array($id))) {
         $aa = array('delete' => 'success');
-        sendAnsver($aa);
+        echo json_encode($aa);
     }
 }
 function getSinglepost($id = null){
